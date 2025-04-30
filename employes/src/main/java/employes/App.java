@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class App {
+
+    // Ta liste d'employés n'a pas l'air triée
+    // TODO revoir l'algo de tri sur le nom et prénom
+
     public static void main(String[] args) {
 
         // Agences (Ex.5)
@@ -42,6 +46,8 @@ public class App {
         // Ajout des employés
         employes.add(
                 new Employes("Rawen", "Marie", LocalDate.of(2010, 2, 14), "ADV", 30000, "Direction", agenceLanderneau));
+        employes.add(new Employes("Olya", "Lilo", LocalDate.of(2012, 7, 1), "Logistique", 40000, "Général",
+                agenceLanderneau));
         employes.add(new Employes("Olya", "Lili", LocalDate.of(2012, 7, 1), "Logistique", 40000, "Général",
                 agenceLanderneau));
         employes.add(new Employes("Niephaste", "Vincent", LocalDate.of(2024, 6, 1), "DévFullstack", 28000, "DSI",
@@ -87,6 +93,11 @@ public class App {
                 return compare;
             return emp1.getPrenom().compareTo(emp2.getPrenom());
         });
+
+        System.out.println("\n ** Sort ** \n");
+        for (Employes e : employes) {
+            System.out.println(e);
+        }
         /*
          * => Optimisation de :
          * 

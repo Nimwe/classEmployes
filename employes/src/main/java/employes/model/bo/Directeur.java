@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 public class Directeur extends Employes {
 
+    // ✅ Parfait, c'est ce que demandait le cahier des charges
     public Directeur(String nom, String prenom, LocalDate dateEmbauche, String poste, int salaire, String service,
             Agences agence) {
         super(nom, prenom, dateEmbauche, poste, salaire, service, agence);

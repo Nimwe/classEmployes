@@ -37,6 +37,9 @@ public class Employes implements Comparable<Employes> {
         }
     }
 
+    // ⚠️ La possibilité d'afficher une liste d'employés doit être dans le main ou
+    // éventuellement dans l'agence mais ce n'est pas à l'employé de compter une
+    // liste
     /**
      * Retourne une liste des employés en String
      * 
@@ -198,6 +201,11 @@ public class Employes implements Comparable<Employes> {
         }
         return "Nous ne sommes pas à la date echue du versement des primes";
     }
+
+    // ⚠️La possibilité de calculer la masse salariale d'une liste d'employés doit
+    // être dans le main ou
+    // éventuellement dans l'agence mais ce n'est pas à l'employé de calculer cela
+    // Il peut éventuellemnt calculer son propre cout
 
     /**
      * Calcul de la masse salariale totale de l'entreprise en additionnant les

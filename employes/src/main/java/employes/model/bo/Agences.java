@@ -3,6 +3,7 @@ package employes.model.bo;
 import java.util.ArrayList;
 import java.util.List;
 
+// Attention : ne pas séparer les attributs dans ta classe (aRestaurant en bas de fichier)
 public class Agences {
 
     private String nomAgence;
