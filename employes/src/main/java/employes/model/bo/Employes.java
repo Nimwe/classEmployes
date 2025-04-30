@@ -15,15 +15,10 @@ public class Employes implements Comparable<Employes> {
     private String service;
     private static int nombreEmployes = 0;
     private Agences agence;
+    private List<Enfants> enfants = new ArrayList<>();
 
     // Date du jour mis à jour automatique
     LocalDate today = LocalDate.now();
-
-    // Attention :
-    // Pour enfant => dupliquer la liste ici en plus de la creer pour eviter les
-    // ecrasement
-    // celui du main sert de tableau temporaire pour le formulaire et le dupliquer
-    // sera le tableau'final' qui correspond à la bdd
 
     // Constructeur
     public Employes(String nom, String prenom, LocalDate dateEmbauche, String fonction, int salaire, String service,
@@ -217,6 +212,88 @@ public class Employes implements Comparable<Employes> {
             total += employe.getSalaire() + employe.primes();
         }
         return total;
+    }
+
+    /**
+     * Vérification de l'anciennetè dans l'entreprise pour pouvoir prétendre aux
+     * chèques vacances
+     * Il faut minimun 1 an d'anciennetè pour y avoir le droit
+     * 
+     * @return La possibilité ou non d'avoir des cheques vacances
+     */
+    public String chqVacances() {
+        if (getAnciennete() >= 1) {
+            return "Vous avez le droit aux cheques vacances";
+        }
+        return "Il faut 1 an d'ancienneté pour pouvoir prétendre aux cheques vacances";
+    }
+
+    /**
+     * Copie de la iste des enfants pour eviter l'ecrasement
+     * Création d'une copie indépendante de la liste pour chaque employé
+     * 
+     * @param enfant
+     */
+    public void setEnfant(List<Enfants> enfants) {
+        this.enfants = new ArrayList<>();
+        for (Enfants enf : enfants) {
+            this.enfants.add(new Enfants(enf.getNom(), enf.getDateNaissance()));
+        }
+    }
+
+    /**
+     * Une fois les enfants de chaque employés ajoutés
+     * 
+     * @return la liste des enfants
+     */
+    public List<Enfants> getEnfants() {
+        return enfants;
+    }
+
+    /**
+     * Verifie si l'employé a des enfants éligibles aux chèques de Noel et renvoie
+     * un résumé du nombre d'enfants ainsi que du montant du ou des chèque(s)
+     * 
+     * - 20 € pour les enfants de 0 à 10 ans
+     * - 30 € pour les enfants de 11 à 15 ans
+     * - 50 € pour les enfants de 16 à 18 ans
+     * 
+     * @return un message indiquant si l'employé peut beneficier des chèques Noel et
+     *         leur nombre par catégorie
+     */
+    public String chqNoel() {
+        if (enfants == null || enfants.isEmpty()) {
+            return this.prenom + this.nom + " n'a pas d'enfants.";
+        }
+
+        int chq20 = 0;
+        int chq30 = 0;
+        int chq50 = 0;
+
+        for (Enfants enfant : enfants) {
+            int age = enfant.getAge();
+            if (age >= 0 && age <= 10)
+                chq20++;
+            else if (age >= 11 && age <= 15)
+                chq30++;
+            else if (age >= 16 && age <= 18)
+                chq50++;
+        }
+
+        if (chq20 + chq30 + chq50 == 0) {
+            return this.prenom + " " + this.nom + " a des enfants trop âgés pour les chèques de noel.";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.prenom).append(" ").append(this.nom).append(" a des enfants. \n");
+        if (chq20 > 0)
+            sb.append(" - ").append(chq20).append(" chèque(s) de 20 €.\n");
+        if (chq30 > 0)
+            sb.append(" - ").append(chq30).append(" chèque(s) de 30 €.\n");
+        if (chq50 > 0)
+            sb.append(" - ").append(chq50).append(" chèque(s) de 50 €.\n");
+
+        return sb.toString();
     }
 
 }

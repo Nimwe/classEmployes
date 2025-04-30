@@ -1,7 +1,9 @@
 package employes;
 
 import employes.model.bo.Agences;
+import employes.model.bo.Directeur;
 import employes.model.bo.Employes;
+import employes.model.bo.Enfants;
 import employes.model.bo.Repas;
 
 import java.time.LocalDate;
@@ -42,15 +44,31 @@ public class App {
                 new Employes("Rawen", "Marie", LocalDate.of(2010, 2, 14), "ADV", 30000, "Direction", agenceLanderneau));
         employes.add(new Employes("Olya", "Lili", LocalDate.of(2012, 7, 1), "Logistique", 40000, "Général",
                 agenceLanderneau));
-        employes.add(new Employes("Niephaste", "Vincent", LocalDate.of(2023, 6, 1), "DévFullstack", 28000, "DSI",
+        employes.add(new Employes("Niephaste", "Vincent", LocalDate.of(2024, 6, 1), "DévFullstack", 28000, "DSI",
                 agenceBrest));
         employes.add(new Employes("Boulicaut", "Maui", LocalDate.of(2015, 9, 25), "Vendeur export", 50000, "Export",
                 agenceBrest));
         employes.add(
-                new Employes("Lelostec", "Joatan", LocalDate.of(2019, 12, 20), "DévJAVA", 38000, "DSI", agenceQuimper));
+                new Employes("Lelostec", "Joatan", LocalDate.of(2019, 12, 20), "DévJAVA", 38000, "DSI",
+                        agenceQuimper));
         // Affichage de la liste des employés
         System.out.println("\n** Nombre d'employés : " + employes.size() + " **\n");
-
+        // Determination d'un directeur
+        Employes directeur = new Directeur("Lelostec", "Joatan", LocalDate.of(2019, 12, 20), "Directeur", 38000, "DSI",
+                agenceQuimper);
+        employes.add(directeur);
+        System.out.println(directeur);
+        // Affichage des primes
+        for (Employes emp : employes) {
+            double primes = emp.primes();
+            System.out.println(
+                    "\n ** Le 30 Novembre de cette année, " + emp.getPrenom() + " " + emp.getNom() + " recevra " +
+                            String.format("%.2f", primes)
+                            + " euros de primes, comprenant la prime sur salaire et la prime d'ancienneté.\n");
+        } /*
+           * String.format("%0.02f" args) => permet l'affichage de 2 chiffres après la
+           * virgule
+           */
         // Tri des employés par prénoms puis nom (Ordre alphabétique)
         Collections.sort(employes);
         System.out.println("** Tri par Prénom puis Nom ** \n");
@@ -115,8 +133,37 @@ public class App {
                     + restauration);
         }
 
+        // Affiche si l'employé a le droit ou non aux chèques vacances
+        System.out.println("\n ** Chèques Vacances ** \n");
+        for (Employes emp : employes) {
+            System.out.println(emp.getPrenom() + " " + emp.getNom() + " : " + emp.chqVacances());
+        }
+
+        // Enfants
+        // Ajout d'enfant à un employé
+        List<Enfants> enfantsTemp = new ArrayList<>();
+        enfantsTemp.add(new Enfants("Gospel", LocalDate.of(2013, 6, 1)));
+        enfantsTemp.add(new Enfants("Gold", LocalDate.of(2009, 3, 12)));
+
+        Employes joatan = employes.get(0);
+        ajouterEnfant(joatan, enfantsTemp);
+
+        // Affiche si l'employé à le droit ou non aux chèques noël et le cas echéant
+        // combien de chèque par tranche de prix
+        System.out.println(("\n ** Chèques de Noël ** \n"));
+        for (Employes emp : employes) {
+            System.out.println(emp.chqNoel());
+        }
     }
 
+    // Ajoute une copie de la liste de ses enfants à l'employé
+    public static void ajouterEnfant(Employes employe, List<Enfants> enfantsListTemp) {
+        List<Enfants> enfantsCopie = new ArrayList<>();
+        for (Enfants enf : enfantsListTemp) {
+            enfantsCopie.add(new Enfants(enf.getNom(), enf.getDateNaissance()));
+        }
+        employe.setEnfant(enfantsCopie);
+    }
 }
 
 /*
