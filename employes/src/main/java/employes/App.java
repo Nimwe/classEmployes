@@ -14,7 +14,8 @@ import java.util.Collections;
 public class App {
 
     // Ta liste d'employés n'a pas l'air triée
-    // TODO revoir l'algo de tri sur le nom et prénom
+    // ✅Good Job
+    // Bonne documentation
 
     public static void main(String[] args) {
 
